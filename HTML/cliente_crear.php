@@ -269,7 +269,7 @@ if (!isset($_SESSION['cliente_rol']) || $_SESSION['cliente_rol'] != 1) {
 </div>
 
 <div class="formulario1__grupo formulario1__grupo-btn-enviar">
-    <button type="submit" class="formulario1__btn" :disabled="enviando">
+    <button type="submit" class="formulario1__btn" :disabled="enviando ||nombreExiste || !valid.nombre">
         {{ enviando ? 'Enviando...' : 'Confirmar' }}
     </button>
     <p class="formulario1__mensaje-exito" v-if="exito">✓ Formulario enviado exitosamente</p>

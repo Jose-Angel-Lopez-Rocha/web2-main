@@ -1,5 +1,5 @@
 <?php
-require 'conf_sesion.php'; // o la ruta correcta
+require 'conf_sesion.php';
 
 if (isset($_SESSION['cliente'])) {
     echo "Sesión activa. ID: " . $_SESSION['cliente'] . "<br>";

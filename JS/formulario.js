@@ -103,7 +103,7 @@ createApp({
             this.valid.nombre = expresiones.nombre.test(this.nombre.trim());
 
             if (this.valid.nombre) {
-                this.validarNombreAjax(); // 🔥 importante
+                this.validarNombreAjax(); 
             } else {
                 this.nombreExiste = null; // limpia estado si no es válido
             }

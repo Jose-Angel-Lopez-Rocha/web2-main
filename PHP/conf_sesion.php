@@ -7,7 +7,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_set_cookie_params([
         'lifetime' => 0,        // dura hasta cerrar el navegador
         'path'     => '/',
-        'secure'   => false,    
+        'secure'   => true,    
         'httponly' => true,
         'samesite' => 'Lax'
     ]);

@@ -1,23 +1,48 @@
 <?php
 header("Content-Type: application/json");
 
-$conexion = new mysqli("localhost", "root", "", "zapateria", 4306);
-
-if ($conexion->connect_error) {
-    echo json_encode(["error" => "Error de conexión"]);
+try {
+    $pdo = new PDO(
+        "mysql:host=localhost;port=4306;dbname=zapateria;charset=utf8mb4",
+        "root",
+        "",
+        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+    );
+} catch (PDOException $e) {
+    echo json_encode(["success" => false, "message" => "Error de conexión a la base de datos"]);
     exit;
 }
 
-$marca = $_POST["marca"] ?? "";
+// Leer JSON del body
+$datos = json_decode(file_get_contents("php://input"), true);
 
-$stmt = $conexion->prepare("SELECT id FROM calzado WHERE marca = ?");
-$stmt->bind_param("s", $marca);
-$stmt->execute();
-$stmt->store_result();
+$marca = $datos['marca'] ?? "";
+$talla = $datos['talla'] ?? "";
+$color = $datos['color'] ?? "";
+$stock = $datos['stock'] ?? 0;
+$precio = $datos['precio'] ?? 0;
+$categoria = $datos['categoria'] ?? "";
 
-echo json_encode([
-    "existe" => $stmt->num_rows > 0
-]);
+// Validar que marca no esté vacía
+if (!$marca) {
+    echo json_encode(["success" => false, "message" => "La marca es obligatoria"]);
+    exit;
+}
 
-$stmt->close();
-$conexion->close();
+// Insertar en la base de datos
+try {
+    $stmt = $pdo->prepare("INSERT INTO calzado (marca, talla, color, stock, precio, categoria) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->execute([$marca, $talla, $color, $stock, $precio, $categoria]);
+
+    echo json_encode([
+        "success" => true,
+        "id" => $pdo->lastInsertId(),
+        "message" => "Calzado registrado correctamente"
+    ]);
+} catch (PDOException $e) {
+    if ($e->getCode() == 23000) { // UNIQUE duplicado
+        echo json_encode(["success" => false, "message" => "La marca '$marca' ya está registrada"]);
+    } else {
+        echo json_encode(["success" => false, "message" => "Error de base de datos: " . $e->getMessage()]);
+    }
+}

@@ -79,12 +79,7 @@ if (!isset($_SESSION['cliente'])) {
         <h4>Información</h4>
         <ul>
             <li><a href="mailto:lopezrochaangel30@gmail.com">Enviar correo</a></li>    
-        </ul>
-        <p>
-            <a href="https://validator.w3.org/">
-            <img src="../imagenes/valid-html40.png" alt="Valid html" style="border:0;width:88px;height:31px">
-            </a>
-        </p>            
+        </ul>           
         <p>
             <a href="https://jigsaw.w3.org/css-validator/check/referer">
                 <img style="border:0;width:88px;height:31px"
