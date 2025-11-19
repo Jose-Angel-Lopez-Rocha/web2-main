@@ -177,7 +177,7 @@ if (!isset($_SESSION['cliente'])) {
   </div>
 
 <!-- Botón enviar -->
-<button class="formulario_stock__btn" type="submit" :disabled="MarcaExiste">
+<button class="formulario_stock__btn" type="submit" :disabled="enviando">
     {{ enviando ? 'Guardando...' : 'Agregar Calzado' }}
 </button>
 

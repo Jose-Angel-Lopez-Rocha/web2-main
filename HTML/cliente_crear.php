@@ -44,22 +44,21 @@ if (!isset($_SESSION['cliente_rol']) || $_SESSION['cliente_rol'] != 1) {
 <div id="app">
         <form @submit.prevent="enviarFormulario" class="formulario1">
             
-            <!-- Nombre -->
             <div class="formulario1__grupo" :class="getClaseValidacion('nombre')">
                 <label for="nombre" class="formulario1__label">Nombre</label>
                 <div class="formulario1__grupo_input">
                     <input 
-                    type="text" 
-                    v-model="nombre" 
-                    id="nombre" 
-                    class="formulario1__input" 
-                    placeholder="Angel"
-                    @input="validarCampo('nombre'); validarNombreAjax()"
-                    @blur="marcarComoTocado('nombre')"
-                    autocomplete="off">
+                        type="text" 
+                        v-model="nombre" 
+                        id="nombre" 
+                        class="formulario1__input" 
+                        placeholder="Angel"
+                        @input="validarCampo('nombre')"
+                        @blur="marcarComoTocado('nombre')"
+                        autocomplete="off">
                     <i class="formulario1__validacion-estado fa-solid" :class="getClaseIcono('nombre')" v-show="tocado.nombre"></i>
                 </div>
-                <p class="formulario1__input_error" v-if="errores.nombre">{{ errores.nombre }}</p>
+                <p class="formulario1__input_error" v-if="tocado.nombre && nombre && !valid.nombre">El nombre solo debe tener letras</p>
             </div>
 
             <!-- Apellido Paterno -->
